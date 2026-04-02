@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FeedBackCELL 🔗
 
-## Getting Started
+Plataforma de feedback e comentários em tempo real construída com **Next.js**, **Express** e **MySQL**.
 
-First, run the development server:
+## 🚀 Iniciando Rápido
+
+### Com Docker
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Na pasta raiz do projeto
+docker-compose up -d
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Tudo rodará automaticamente:
+- 🌐 Frontend: http://localhost:3000
+- 🔌 Backend API: http://localhost:5000
+- 💾 MySQL: localhost:3307
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Sem Docker
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+#### Frontend:
+```bash
+cd frontend
+pnpm install
+pnpm dev
+```
 
-## Learn More
+#### Backend:
+```bash
+cd backend
+pnpm install
+node server.js
+```
+## 🔌 API
 
-To learn more about Next.js, take a look at the following resources:
+Não tem ainda
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Endpoint Base
+```
+http://localhost:5000/api
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Exemplo: Buscar Feedback
+```bash
+curl http://localhost:5000/api/feedback
+```
 
-## Deploy on Vercel
+### Como usar no Frontend
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```typescript
+import { useApi } from '@/src/components/hooks/useApi';
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+export default function Example() {
+  const { request, loading, error } = useApi();
+
+  const fetchData = async () => {
+    const data = await request('GET', '/api/feedback');
+    console.log(data);
+  };
+
+  return <button onClick={fetchData}>Buscar Dados</button>;
+}
+```
+
+## 📦 Dependências Principais
+
+### Frontend:
+- **Next.js 16** - Framework React
+- **TypeScript** - Type safety
+- **TailwindCSS** - Estilos (via @tailwindcss)
+
+### Backend:
+- **Express 5** - Framework Web
+- **MySQL2** - Driver MySQL
+- **CORS** - Compartilhamento de recursos
+- **Dotenv** - Variáveis de ambiente
+
+## 🔧 Variáveis de Ambiente .Env
+
+### Backend (`.env`)
+```
+DB_HOST=mysql
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=root
+DB_NAME=feedbackcell
+NODE_ENV=development
+```
+
+### Frontend (`.env`)
+```
+NEXT_PUBLIC_API_URL=http://localhost:5000
+```
+
+## 📝 Próximos Passos
+
+- [ ] Implementar autenticação (JWT)
+- [ ] Criar endpoints API completos
+- [ ] Adicionar validações
+- [ ] Implementar testes
+- [ ] Deploar em produção
+
+## 🤝 Contribuindo
+
+Sinta-se livre para fazer fork, criar branches e enviar pull requests!
+
+## 📄 Licença
+
+Este projeto está sob licença ISC.
